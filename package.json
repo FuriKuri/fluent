@@ -1,5 +1,5 @@
 {
-  "name": "your-sweet-unit-test",
+  "name": "fluent",
   "version": "0.0.1",
   "dependencies": {
     "grunt": "~0.4.1",
