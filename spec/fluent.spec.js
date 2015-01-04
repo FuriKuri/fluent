@@ -10,9 +10,15 @@ describe('fluent', function() {
       var config = {
         init: ['firstFn'],
         chain: {
-          firstFn: ['secondFn'],
-          secondFn: ['lastFn'],
-          lastFn: []
+          firstFn: {
+            next: ['secondFn']
+          },
+          secondFn: {
+            next: ['lastFn']
+          },
+          lastFn: {
+            next: []
+          }
         }
       };
       var fluent = new Fluent(config);
@@ -29,7 +35,6 @@ describe('fluent', function() {
       expect(fluent.firstFn().secondFn().firstFn).not.toBeDefined();
       expect(fluent.firstFn().secondFn().secondFn).not.toBeDefined();
     });
-
   });
 
 });
