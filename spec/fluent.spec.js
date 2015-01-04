@@ -35,6 +35,33 @@ describe('fluent', function() {
       expect(fluent.firstFn().secondFn().firstFn).not.toBeDefined();
       expect(fluent.firstFn().secondFn().secondFn).not.toBeDefined();
     });
+
+    it('has callbacks for each state', function() {
+      var counter = 0;
+      var cb = function() {
+        counter++;
+      };
+      var config = {
+        init: ['firstFn'],
+        chain: {
+          firstFn: {
+            next: ['secondFn'],
+            cb: cb
+          },
+          secondFn: {
+            next: ['lastFn'],
+            cb: cb
+          },
+          lastFn: {
+            next: [],
+            cb: cb
+          }
+        }
+      };
+      var fluent = new Fluent(config);
+      fluent.firstFn().secondFn().lastFn();
+      expect(counter).toEqual(3);
+    });
   });
 
 });
