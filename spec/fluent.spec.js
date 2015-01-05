@@ -62,6 +62,29 @@ describe('fluent', function() {
       fluent.firstFn().secondFn().lastFn();
       expect(counter).toEqual(3);
     });
+
+    it('calls the done callback if chain is done', function() {
+      var doneCallbackWasCalled = false;
+      var config = {
+        init: ['firstFn'],
+        chain: {
+          firstFn: {
+            next: ['lastFn']
+          },
+          lastFn: {
+            next: []
+          }
+        },
+        done: function() {
+          doneCallbackWasCalled = true;
+        }
+      };
+      var fluent = new Fluent(config);
+
+      fluent.firstFn().lastFn()();
+      expect(doneCallbackWasCalled).toEqual(true);
+
+    });
   });
 
 });
