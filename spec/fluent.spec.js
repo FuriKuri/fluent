@@ -85,6 +85,31 @@ describe('fluent', function() {
       expect(doneCallbackWasCalled).toEqual(true);
 
     });
+
+    it('passes the argument to the callback function', function() {
+      var args = null;
+      var doneArgs = null;
+      var config = {
+        init: ['firstFn'],
+        chain: {
+          firstFn: {
+            next: [],
+            cb: function() {
+              args = arguments;
+            }
+          }
+        },
+        done: function() {
+          doneArgs = arguments;
+        }
+      };
+      var fluent = new Fluent(config);
+      fluent.firstFn('hello', 'world')('end');
+      expect(args[0]).toEqual('hello');
+      expect(args[1]).toEqual('world');
+      expect(doneArgs[0]).toEqual('end');
+
+    });
   });
 
 });
