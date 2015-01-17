@@ -110,6 +110,32 @@ describe('fluent', function() {
       expect(doneArgs[0]).toEqual('end');
 
     });
+
+    it('collects only the data if no callback was called', function() {
+      var collectedData = null;
+      var config = {
+        init: ['firstFn'],
+        chain: {
+          firstFn: {
+            next: ['secondFn']
+          },
+          secondFn: {
+            next: ['lastFn']
+          },
+          lastFn: {
+            next: []
+          }
+        },
+        done: function(data) {
+          collectedData = data;
+        }
+      };
+      var fluent = new Fluent(config);
+      fluent.firstFn('first').secondFn('2').lastFn(3)();
+      expect(collectedData.firstFn).toEqual('first');
+      expect(collectedData.secondFn).toEqual('2');
+      expect(collectedData.lastFn).toEqual(3);
+    });
   });
 
 });
