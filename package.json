@@ -18,5 +18,8 @@
     "test": "istanbul cover ./node_modules/.bin/jasmine-node spec",
     "posttest": "istanbul check-coverage",
     "prepublish": "npm test && npm prune"
-  }
+  },
+  "author": "Theo Pack <tf.pack@gmail.com>",
+  "license": "MIT",
+  "main": "./lib/fluent"
 }
